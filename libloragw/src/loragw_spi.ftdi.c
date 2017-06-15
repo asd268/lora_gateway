@@ -26,7 +26,7 @@ Maintainer: Sylvain Miermont
 #include <stdlib.h>		/* malloc free */
 #include <string.h>		/* memcpy */
 
-#include <linux/limits.h>
+#include <sys/types.h>
 #include <linux/limits.h>
 
 #include <mpsse.h>
