@@ -72,7 +72,7 @@ int main()
 		lgw_spi_rb(spi_target, 0x5A, datain, ARRAY_SIZE(datain));
 	
 	/* last read (blocking), just to be sure no to quit before the FTDI buffer is flushed */
-	lgw_spi_r(spi_target, 0x55, &data);
+	lgw_spi_r(spi_target, 0x01, &data);
 	printf("data received (simple read): %d\n",data);
 	
 	lgw_spi_close(spi_target);
