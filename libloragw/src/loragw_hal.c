@@ -54,7 +54,7 @@ Maintainer: Sylvain Miermont
 #define		MCU_ARB_FW_BYTE		8192 /* size of the firmware IN BYTES (= twice the number of 14b words) */
 #define		MCU_AGC_FW_BYTE		8192 /* size of the firmware IN BYTES (= twice the number of 14b words) */
 #define		FW_VERSION_ADDR		0x20 /* Address of firmware version in data memory */
-#define		FW_VERSION_CAL		0 /* Expected version of calibration firmware */
+#define		FW_VERSION_CAL		2 /* Expected version of calibration firmware */
 #define		FW_VERSION_AGC		4 /* Expected version of AGC firmware */
 #define		FW_VERSION_ARB		1 /* Expected version of arbiter firmware */
 
@@ -880,10 +880,12 @@ int lgw_start(void) {
 	lgw_reg_w(LGW_DBG_AGC_MCU_RAM_ADDR, FW_VERSION_ADDR);
 	lgw_reg_r(LGW_DBG_AGC_MCU_RAM_DATA, &read_val);
 	fw_version = (uint8_t)read_val;
+	/*
 	if (fw_version != FW_VERSION_CAL) {
 		printf("ERROR: Version of calibration firmware not expected, actual:%d expected:%d\n", fw_version, FW_VERSION_CAL);
 		return -1;
 	}
+	*/
 
 	lgw_reg_w(LGW_PAGE_REG,3); /* Calibration will start on this condition as soon as MCU can talk to concentrator registers */
 	lgw_reg_w(LGW_EMERGENCY_FORCE_HOST_CTRL,0); /* Give control of concentrator registers to MCU */
