@@ -880,12 +880,14 @@ int lgw_start(void) {
 	lgw_reg_w(LGW_DBG_AGC_MCU_RAM_ADDR, FW_VERSION_ADDR);
 	lgw_reg_r(LGW_DBG_AGC_MCU_RAM_DATA, &read_val);
 	fw_version = (uint8_t)read_val;
-	/*
+	
+	
+	
 	if (fw_version != FW_VERSION_CAL) {
 		printf("ERROR: Version of calibration firmware not expected, actual:%d expected:%d\n", fw_version, FW_VERSION_CAL);
 		return -1;
 	}
-	*/
+	
 
 	lgw_reg_w(LGW_PAGE_REG,3); /* Calibration will start on this condition as soon as MCU can talk to concentrator registers */
 	lgw_reg_w(LGW_EMERGENCY_FORCE_HOST_CTRL,0); /* Give control of concentrator registers to MCU */
@@ -908,14 +910,14 @@ int lgw_start(void) {
 		bit 5: radio A TX imbalance correction successful
 		bit 6: radio B TX imbalance correction successful
 	*/
-	/*
+	
 	if ((cal_status & 0x81) != 0x81) {
 		DEBUG_PRINTF("ERROR: CALIBRATION FAILURE (STATUS = %u)\n", cal_status);
 		return LGW_HAL_ERROR;
 	} else {
 		DEBUG_PRINTF("Note: calibration finished (status = %u)\n", cal_status);
 	}
-	*/
+	
 	if (rf_enable[0] && ((cal_status & 0x02) == 0)) {
 		DEBUG_MSG("WARNING: calibration could not access radio A\n");
 	}
