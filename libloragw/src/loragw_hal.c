@@ -908,12 +908,14 @@ int lgw_start(void) {
 		bit 5: radio A TX imbalance correction successful
 		bit 6: radio B TX imbalance correction successful
 	*/
+	/*
 	if ((cal_status & 0x81) != 0x81) {
 		DEBUG_PRINTF("ERROR: CALIBRATION FAILURE (STATUS = %u)\n", cal_status);
 		return LGW_HAL_ERROR;
 	} else {
 		DEBUG_PRINTF("Note: calibration finished (status = %u)\n", cal_status);
 	}
+	*/
 	if (rf_enable[0] && ((cal_status & 0x02) == 0)) {
 		DEBUG_MSG("WARNING: calibration could not access radio A\n");
 	}
