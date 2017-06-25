@@ -20,8 +20,10 @@ Maintainer: Sylvain Miermont
 
 #include <stdint.h>
 #include <stdio.h>
+#include <mraa.h>
 
 #include "loragw_spi.h"
+
 
 /* -------------------------------------------------------------------------- */
 /* --- PRIVATE MACROS ------------------------------------------------------- */
@@ -33,6 +35,7 @@ Maintainer: Sylvain Miermont
 
 #define BURST_TEST_SIZE 2500 /* >> LGW_BURST_CHUNK */
 #define TIMING_REPEAT	1	 /* repeat transactions multiple times for timing characterisation */
+#define GPIO_PIN	2
 
 /* -------------------------------------------------------------------------- */
 /* --- MAIN FUNCTION -------------------------------------------------------- */
@@ -44,6 +47,8 @@ int main()
 	uint8_t data = 0;
 	uint8_t dataout[BURST_TEST_SIZE];
 	uint8_t datain[BURST_TEST_SIZE];
+	mraa_gpio context rst_pin;
+	
 	
 	for (i = 0; i < BURST_TEST_SIZE; ++i) {
 		dataout[i] = 0x30 + (i % 10); /* ASCCI code for 0 -> 9 */
@@ -74,14 +79,20 @@ int main()
 	/* last read (blocking), just to be sure no to quit before the FTDI buffer is flushed */
 	lgw_spi_r(spi_target, 0x01, &data);
 	printf("data received (simple read): %d\n",data);
-	
+
 	lgw_spi_close(spi_target);
 	printf("End of test for loragw_spi.c\n");
 	
 	printf("GPIO_2 TEST\n");
-	for(i=0;i<1000;i++){
-		
+	mraa_init();		
+	rst_pin = mraa_gpio_init(GPIO_PIN);
+	mraa_gpio_dir(rst_pin,MRAA_GPIO_OUT);
 	
+	for(i=0;i<1000;i++){
+		mraa_gpio_write(rst_pin,1);
+		sleep(1);
+		mraa_gpio_write(rst_pin,0);
+		sleep(1);	
 	}
 	printf("GPIO_2 TEST END\n");
 	return 0;
