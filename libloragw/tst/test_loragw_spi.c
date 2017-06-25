@@ -78,6 +78,12 @@ int main()
 	lgw_spi_close(spi_target);
 	printf("End of test for loragw_spi.c\n");
 	
+	printf("GPIO_2 TEST\n");
+	for(i=0;i<1000;i++){
+		
+	
+	}
+	printf("GPIO_2 TEST END\n");
 	return 0;
 }
 
